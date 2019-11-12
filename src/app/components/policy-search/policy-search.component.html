@@ -1,10 +1,225 @@
+  <header role="banner">
+     
+    <nav class="navbar navbar-expand-md navbar-dark bg-light">
+      <div class="container">
+        <img src="assets/images/BCGGamma.png" width="200px;"/>
+        <!-- <a class="navbar-brand" href="index.html">Listed</a> -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse navbar-light" id="navbarsExample05">
+          <ul class="navbar-nav ml-auto pl-lg-5 pl-0">
+            <li class="nav-item">
+              <a class="nav-link active" (click)="AddNew()" style="cursor: pointer"  data-toggle="modal" data-target="#myModal">Add New Policy</a>
+            </li>
+            <!-- <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="destination.html" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Destination</a>
+              <div class="dropdown-menu" aria-labelledby="dropdown04">
+                <a class="dropdown-item" href="destination.html">Places</a>
+                <a class="dropdown-item" href="destination.html">Hotels</a>
+                <a class="dropdown-item" href="destination.html">Restaurants</a>
+              </div>
 
-  policy-search works!
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="blog.html">Blog</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contact.html">Contact</a>
+            </li> -->
+          </ul>
+          
+        </div>
+      </div>
+    </nav>
+  </header>
+  <!-- END header -->
 
-  <div>{{Policy}}</div>
-  <div *ngFor="let item of PolicyList; let i=index">
-    {{item.Policy_id}}
-  </div>
+  <section class="site-hero overlay" data-stellar-background-ratio="0.5" style="background-image: url(assets/images/big_image_1.jpg);">
+    <div class="container">
+      <div class="row align-items-center site-hero-inner justify-content-center">
+        <div class="col-md-8 text-center">
 
+          <div class="mb-5 element-animate">
+            <h1>Insurance Policy Search</h1>
+            <p>Select search parameter from the dropdown menu below.</p>
+          </div>
 
+          <form class="form-inline element-animate" id="search-form">
+            <label for="s" class="sr-only">Location</label>
+            <select class="form-control form-control-block search-input" style="width: 25%;margin-right: 5px" 
+            (change)="SelectSearchParam($event)">
+             <option [value]="pid" >Profile ID</option>
+             <option [value]="cid">Customer ID</option>
+            </select>
+            <input [ngModelOptions]="{standalone: true}" type="text" style="width: 50%" [(ngModel)]="searchinput" class="form-control form-control-block search-input" id="autocomplete" placeholder="Enter ID" >
+            <button type="submit" class="btn btn-primary" (click)="search()">Search</button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- END section -->
+
+  <section class="feature-destination" style="margin-top: -320px;">
+
+    <div class="container" style="max-width: 1250px;" >
+      <div class="row" >
+        <div class="col-md-12" style="border-radius: 5px; background-color: whitesmoke;padding-top: 10px;padding-bottom: 20px;" *ngIf="Policy.Policy_id!=undefined">
+         <span  *ngIf="Policy.Policy_id!=undefined" style="font-size: 20px; font-weight: bold;"> Policy Details</span>
+            <table  *ngIf="Policy.Policy_id!=undefined">
+              <tr style="background-color:rgb(219, 214, 214)">
+                <th  >CustomerID</th>
+                <th>PolicyID</th>
+                <th>Purchase Date</th>
+                <th>Fuel</th>
+                <th>Segment</th>
+                <th>Premium</th>
+                <th>Gender</th>
+                <th>Income</th>
+                <th>Region</th>
+                <th></th>
+         
+              
+              </tr>
+              <tr>
+                <td>{{Policy.Customer_id}}</td>
+                <td>{{Policy.Policy_id}}</td>
+                <td>{{Policy.Date_Of_Purchase}}</td>
+                <td>{{Policy.Fuel}}</td>
+                <td>{{Policy.Vehicle_Segment}}</td>
+                <td>{{Policy.Premium}}</td>
+                <td>{{Policy.Customer_Gender}}</td>
+                <td>{{Policy.Customer_Income_Group}}</td>
+                <td>{{Policy.Customer_Region}}</td>
+                <td ><a style="cursor: pointer"  data-toggle="modal" data-target="#myModal"><i class="icon ion-edit"></i></a></td>
+             
+             
+              </tr></table>
+
+        </div>
+     
+      </div>
+    </div>
+  </section>
+  <!-- END section -->
+       <!-- Modal -->
+       <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+        
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header" >
+           
+              <h4 class="modal-title" style="font-family: 'Raleway', arial, sans-serif;">Policy</h4>
+              <button  class="btn btn-default" style="border-radius: 5px;padding: 5px 20px 5px 20px" (click)="save()">Save</button>
+              <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+            </div>
+            <div class="modal-body">
+
+                    <div class="row">
+                     
+                        <div class="col-md-4" *ngIf="Policy.Policy_id!=undefined">
+                          <b>Policy ID</b>
+                          <input type="text" class="form-control custom-input" [readonly]="Policy.Policy_id!=undefined" [(ngModel)]="Policy.Policy_id" placeholder="" />
+                        </div>
+                        <div class="col-md-4">
+                          <b>Customer ID</b>
+                          <input type="text" class="form-control custom-input" [(ngModel)]="Policy.Customer_id" placeholder="">
+                        </div>
+                        <div class="col-md-4">
+                          <b>Date of Purchase</b>
+                          <input type="text" class="form-control custom-input" [readonly]="Policy.Policy_id!=undefined" [(ngModel)]="Policy.Date_Of_Purchase" placeholder="">
+                        </div>
+                 
+                        <div class="col-md-4">
+                          <b>Fuel</b>
+                          <input type="text" class="form-control custom-input" [(ngModel)]="Policy.Fuel" placeholder="">
+                        </div>
+                        <div class="col-md-4">
+                          <b>Vehicle Segment</b>
+                          <input type="text" class="form-control custom-input" [(ngModel)]="Policy.Vehicle_Segment" placeholder="">
+                        </div>
+                        <div class="col-md-4">
+                          <b>Premium</b>
+                          <input type="text" class="form-control custom-input" [(ngModel)]="Policy.Premium" placeholder="">
+                        </div>
+                        <div class="col-md-4">
+                          <b>Bodily Injury Liability</b>
+                          <select class="form-control custom-input" [(ngModel)]="Policy.bodily_injury_liability" >
+                            <option  [ngValue]="true">Yes</option>
+                            <option  [ngValue]="false">No</option>
+                          </select>
+                        </div>
+                        <div class="col-md-4">
+                          <b>Personal Injury Protection</b>
+                          <select class="form-control custom-input" [(ngModel)]="Policy.personal_injury_protection">
+                              <option  [value]="true">Yes</option>
+                              <option  [value]="false">No</option>
+                            </select>
+                          </div>
+                      
+                        <div class="col-md-4">
+                          <b>Property Damage Liability</b>
+                          <select class="form-control custom-input" [(ngModel)]="Policy.property_damage_liability">
+                              <option  [value]="true">Yes</option>
+                              <option  [value]="false">No</option>
+                            </select>
+                          </div>
+                       
+                        <div class="col-md-4">
+                          <b>Collision</b>
+                          <select class="form-control custom-input" [(ngModel)]="Policy.collision">
+                              <option  [value]="true">Yes</option>
+                              <option  [value]="false">No</option>
+                            </select>
+                          </div>
+                     
+                        <div class="col-md-4">
+                          <b>Comprehensive</b>
+                          <select class="form-control custom-input" [(ngModel)]="Policy.comprehensive">
+                              <option  [value]="true">Yes</option>
+                              <option  [value]="false">No</option>
+                            </select>
+                          </div>
+                      
+                        <div class="col-md-4">
+                          <b>Gender</b>
+                          <select class="form-control custom-input" [(ngModel)]="Policy.Customer_Gender">
+                              <option *ngFor="let item of MasterGender"  [value]="item.value" >{{item.name}}</option>
+                            </select>
+                          </div>
+                      
+                        <div class="col-md-4">
+                          <b>Income Group</b>
+                          <input type="text" class="form-control custom-input" placeholder="" [(ngModel)]="Policy.Customer_Income_Group">
+                        </div>
+                        <div class="col-md-4">
+                          <b>Region</b>
+                          <input type="text" class="form-control custom-input" placeholder="" [(ngModel)]="Policy.Customer_Region">
+                        </div>
+                        <div class="col-md-4">
+                          <b>Marital Status</b>
+                          <select class="form-control custom-input" [(ngModel)]="Policy.Customer_Marital_Status">
+                              <option  [value]="true">Married</option>
+                              <option  [value]="false">Unmarried</option>
+                            </select>
+                        </div>
+                     
+                       
+                        </div>
+                      
+                          
+                      </div>
+            </div>
+            <!-- <div class="modal-footer">
+                <button  class="btn btn-default"  (click)="CreatePolicy()">Save</button>
+            </div> -->
+          </div>
+          
+        </div>
 

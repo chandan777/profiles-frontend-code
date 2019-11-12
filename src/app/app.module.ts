@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { PolicySearchComponent } from './components/policy-search/policy-search.component';
 import{HttpService} from './Service/http.service'
 import { HttpClientModule } from '@angular/common/http'; 
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     routingcomponents,
@@ -13,7 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
     PolicySearchComponent
   ],
   imports: [
-    BrowserModule,AppRoutingModule,HttpModule,HttpClientModule
+    BrowserModule,AppRoutingModule,HttpModule,HttpClientModule,FormsModule
   ],
   providers: [HttpService],
   bootstrap: [AppComponent]

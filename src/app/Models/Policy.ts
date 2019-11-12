@@ -10,9 +10,9 @@ export class Policy{
     collision:boolean;
     comprehensive:boolean;
     Customer_Gender:string;
-    Customer_Income_group:string;
+    Customer_Income_Group:string;
     Customer_Region:string;
-    Customer_Marital_status:boolean;
+    Customer_Marital_Status:boolean;
     Policy_id:number;
 
 }
